@@ -1,0 +1,4 @@
+/* Keep the Python badge clear of the hero status card. */
+.portrait-stage .orbit-python{left:-18px;bottom:170px}
+@media(max-width:800px){.portrait-stage .orbit-python{left:-6px;bottom:145px}}
+@media(max-width:460px){.portrait-stage .orbit-python{left:0;bottom:125px;transform:scale(.78)}}
