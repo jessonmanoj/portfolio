@@ -79,6 +79,10 @@ if (githubProfileLink && CONFIG.githubUsername) {
   githubProfileLink.target = '_blank';
   githubProfileLink.rel = 'noreferrer';
 }
+const githubProfileMessage = document.querySelector('.github-card p:not(.eyebrow)');
+if (githubProfileMessage && CONFIG.githubUsername) {
+  githubProfileMessage.innerHTML = `Explore projects and future open-source work at <code>@${CONFIG.githubUsername}</code>.`;
+}
 
 if (matchMedia('(pointer:fine)').matches) { const dot = document.querySelector('.cursor-dot'), ring = document.querySelector('.cursor-ring'); window.addEventListener('mousemove', e => { dot.style.left = ring.style.left = `${e.clientX}px`; dot.style.top = ring.style.top = `${e.clientY}px`; }); document.querySelectorAll('a,button,input,textarea').forEach(el => el.addEventListener('mouseenter', () => ring.classList.add('hover'))); document.querySelectorAll('a,button,input,textarea').forEach(el => el.addEventListener('mouseleave', () => ring.classList.remove('hover'))); }
 const creativeImage = document.querySelector('.creative-image');
