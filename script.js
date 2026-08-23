@@ -1,7 +1,7 @@
 /* Centralized portfolio content — replace links and descriptions here as information grows. */
 const CONFIG = {
   githubUsername: 'jessonmanoj',
-  social: { github: 'https://github.com/jessonmanoj', linkedin: '', instagram: '', facebook: '' },
+  social: { github: 'https://github.com/jessonmanoj', linkedin: '', instagram: 'https://www.instagram.com/_jes_son__?igsi=dWM0aXR6emIwbmww', facebook: '' },
   skills: [
     { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg', name: 'HTML', description: 'Semantic structure for modern web experiences.', level: 'Experienced', color: '#e75c3b' },
     { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg', name: 'CSS', description: 'Responsive styling, layouts, and visual detail.', level: 'Experienced', color: '#3575d3' },
@@ -40,6 +40,8 @@ setTheme(localStorage.getItem('jm-theme') === 'dark'); theme.addEventListener('c
 const toggle = document.querySelector('.menu-toggle'), nav = document.querySelector('nav'); toggle.addEventListener('click', () => { const isOpen = nav.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen); }); document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
 const form = document.querySelector('.contact-form'), message = document.querySelector('.form-message');
+// Static hosting cannot send mail directly, so a valid form opens a pre-filled email draft.
+form.addEventListener('submit', event => { if (!form.checkValidity()) return; event.preventDefault(); const data = new FormData(form); const subject = data.get('subject'); const body = `Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`; message.className = 'form-message success'; message.textContent = 'Opening your email app…'; window.location.href = `mailto:jessonmanoj1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; });
 form.addEventListener('submit', event => { event.preventDefault(); if (!form.checkValidity()) { message.className = 'form-message'; message.textContent = 'Please complete all fields with a valid email address.'; form.reportValidity(); return; } message.className = 'form-message success'; message.textContent = 'Thanks — connect this form to your preferred email service to send messages.'; form.reset(); });
 document.querySelector('#year').textContent = new Date().getFullYear();
 
