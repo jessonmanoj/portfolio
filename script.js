@@ -40,6 +40,39 @@ setTheme(localStorage.getItem('jm-theme') === 'dark'); theme.addEventListener('c
 const toggle = document.querySelector('.menu-toggle'), nav = document.querySelector('nav'); toggle.addEventListener('click', () => { const isOpen = nav.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen); }); document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
 const form = document.querySelector('.contact-form'), message = document.querySelector('.form-message');
+// Formspree delivers static-site contact messages to Jesson's inbox.
+// Capture phase prevents legacy form listeners below from overriding this handler.
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  if (!form.checkValidity()) {
+    message.className = 'form-message';
+    message.textContent = 'Please complete all fields with a valid email address.';
+    form.reportValidity();
+    return;
+  }
+  const data = new FormData(form);
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = 'Sending…';
+  message.className = 'form-message';
+  message.textContent = '';
+  try {
+    const response = await fetch('https://formspree.io/f/meajwrly', {
+      method: 'POST', body: data, headers: { Accept: 'application/json' }
+    });
+    if (!response.ok) throw new Error('Submission failed');
+    form.reset();
+    message.className = 'form-message success';
+    message.textContent = 'Thank you — your message has been sent.';
+  } catch (error) {
+    message.className = 'form-message';
+    message.textContent = 'Sorry, your message could not be sent. Please email me directly.';
+  } finally {
+    submitButton.disabled = false;
+    submitButton.innerHTML = 'Send message <b>↗</b>';
+  }
+}, true);
 // Static hosting cannot send mail directly, so a valid form opens a pre-filled email draft.
 form.addEventListener('submit', event => { if (!form.checkValidity()) return; event.preventDefault(); const data = new FormData(form); const subject = data.get('subject'); const body = `Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`; message.className = 'form-message success'; message.textContent = 'Opening your email app…'; window.location.href = `mailto:jessonmanoj1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; });
 form.addEventListener('submit', event => { event.preventDefault(); if (!form.checkValidity()) { message.className = 'form-message'; message.textContent = 'Please complete all fields with a valid email address.'; form.reportValidity(); return; } message.className = 'form-message success'; message.textContent = 'Thanks — connect this form to your preferred email service to send messages.'; form.reset(); });
