@@ -12,7 +12,7 @@ const CONFIG = {
   projects: [
     { title: 'EduConnect', description: 'An educational and learning platform project. Add your final project summary, image, and links here.', tech: ['Web', 'PHP'], categories: ['web', 'php'], icon: 'EC', color: 'linear-gradient(135deg,#725ee9,#af85f4)' },
     { title: 'LabMS', description: 'Laboratory Management System. Replace this placeholder with the specific project scope and features.', tech: ['Web', 'JavaScript'], categories: ['web', 'javascript'], icon: 'LM', color: 'linear-gradient(135deg,#e261ac,#f19d83)' },
-    { title: 'Inventory Management System', description: 'An inventory management application. Add technologies, functionality, and project links when available.', tech: ['Python'], categories: ['python'], icon: 'IMS', color: 'linear-gradient(135deg,#319c94,#6bc88c)' }
+    { title: 'Inventory Management System', description: 'A full-stack inventory platform for products, warehouse stock, purchases, sales, payments, and audit-ready stock movements.', tech: ['Python', 'Flask', 'MySQL'], categories: ['python', 'web'], icon: 'IMS', color: 'linear-gradient(135deg,#319c94,#6bc88c)', liveUrl: 'https://inventory-management-system-blo2.onrender.com' }
   ]
 };
 
@@ -24,6 +24,13 @@ function renderProjects(filter = 'all') {
   projectGrid.innerHTML = projects.map(p => `<article class="project-card"><div class="project-visual" style="--project-color:${p.color}"><span class="project-number">SELECTED BUILD</span><strong class="project-icon">${p.icon}</strong></div><div class="project-info"><h3>${p.title}</h3><p>${p.description}</p><div class="project-footer"><div class="tags">${p.tech.map(t => `<span>${t}</span>`).join('')}</div><button class="project-link" aria-disabled="true" title="Add project URL in script.js">↗</button></div></div></article>`).join('');
 }
 renderProjects();
+projectGrid.addEventListener('click', event => {
+  const project = event.target.closest('.project-card');
+  const inventory = CONFIG.projects.find(item => item.title === 'Inventory Management System');
+  if (project?.querySelector('h3')?.textContent === inventory?.title && inventory.liveUrl) {
+    window.open(inventory.liveUrl, '_blank', 'noopener');
+  }
+});
 document.querySelectorAll('.filters button').forEach(button => button.addEventListener('click', () => { document.querySelector('.filters .active').classList.remove('active'); button.classList.add('active'); renderProjects(button.dataset.filter); }));
 
 const header = document.querySelector('.site-header'), progress = document.querySelector('.scroll-progress');
