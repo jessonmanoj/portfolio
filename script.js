@@ -12,7 +12,8 @@ const CONFIG = {
   projects: [
     { title: 'EduConnect', description: 'An educational and learning platform project. Add your final project summary, image, and links here.', tech: ['Web', 'PHP'], categories: ['web', 'php'], icon: 'EC', color: 'linear-gradient(135deg,#725ee9,#af85f4)' },
     { title: 'LabMS', description: 'Laboratory Management System. Replace this placeholder with the specific project scope and features.', tech: ['Web', 'JavaScript'], categories: ['web', 'javascript'], icon: 'LM', color: 'linear-gradient(135deg,#e261ac,#f19d83)' },
-    { title: 'Inventory Management System', description: 'A full-stack inventory platform for products, warehouse stock, purchases, sales, payments, and audit-ready stock movements.', tech: ['Python', 'Flask', 'MySQL'], categories: ['python', 'web'], icon: 'IMS', color: 'linear-gradient(135deg,#319c94,#6bc88c)', liveUrl: 'https://inventory-management-system-blo2.onrender.com' }
+    { title: 'Inventory Management System', description: 'A live full-stack web application for managing products, inventory, purchases, sales, payments, and traceable stock movements.', tech: ['Python', 'Flask', 'MySQL', 'Live Web App'], categories: ['python', 'web'], icon: 'IMS', color: 'linear-gradient(135deg,#319c94,#6bc88c)', liveUrl: 'https://inventory-management-system-blo2.onrender.com' },
+    { title: 'Cryptographic Canvas', description: 'An immersive, interactive cryptography-themed visual experience exploring RSA, hash chains, and the logic behind digital systems.', tech: ['React', 'Tailwind CSS', 'Interactive'], categories: ['javascript', 'web'], icon: 'CC', color: 'linear-gradient(135deg,#131313,#829900)', liveUrl: 'cryptographic-canvas.html' }
   ]
 };
 
@@ -26,9 +27,9 @@ function renderProjects(filter = 'all') {
 renderProjects();
 projectGrid.addEventListener('click', event => {
   const project = event.target.closest('.project-card');
-  const inventory = CONFIG.projects.find(item => item.title === 'Inventory Management System');
-  if (project?.querySelector('h3')?.textContent === inventory?.title && inventory.liveUrl) {
-    window.open(inventory.liveUrl, '_blank', 'noopener');
+  const selectedProject = CONFIG.projects.find(item => item.title === project?.querySelector('h3')?.textContent);
+  if (selectedProject?.liveUrl) {
+    window.open(selectedProject.liveUrl, '_blank', 'noopener');
   }
 });
 document.querySelectorAll('.filters button').forEach(button => button.addEventListener('click', () => { document.querySelector('.filters .active').classList.remove('active'); button.classList.add('active'); renderProjects(button.dataset.filter); }));
