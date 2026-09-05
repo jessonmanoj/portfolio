@@ -6,5 +6,7 @@
 /* The contact form uses the visitor's email app; no setup note is shown. */
 .contact-form small{display:none}
 .projects-grid .project-card:nth-child(4){grid-column:span 7;cursor:pointer}
+.projects-grid .project-card:nth-child(5){grid-column:span 7;cursor:pointer}
 @media(max-width:800px){.projects-grid .project-card:nth-child(4){grid-column:auto}}
+@media(max-width:800px){.projects-grid .project-card:nth-child(5){grid-column:auto}}
 .contact-form small{display:none}
